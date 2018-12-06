@@ -1,9 +1,8 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_module/page/clock.dart';
 import 'package:flutter_module/page/music.dart';
 import 'package:flutter_module/page/page.dart';
-import 'package:flutter_module/theme.dart';
 
 void main() => runApp(MyApp());
 
@@ -35,6 +34,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return  PageView(
       children: <Widget>[
+        ClockView(),
         PageSelect(),
         MusicPlay(),
       ],

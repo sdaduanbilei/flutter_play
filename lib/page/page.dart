@@ -1,7 +1,5 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_module/theme.dart';
 
 class PageSelect extends StatefulWidget {
   @override
@@ -33,7 +31,7 @@ class _PageSelectState extends State<PageSelect> {
             decoration: BoxDecoration(
               color: Colors.white,
               image: DecorationImage(
-                image: NetworkImage('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544013258049&di=52b83e2bb84fbf391fa83634cfa88c89&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimage%2Fc0%253Dshijue1%252C0%252C0%252C294%252C40%2Fsign%3D7ff51f0e04f41bd5ce5ee0b739b3ebbe%2Fac6eddc451da81cb3b307be85866d016082431c4.jpg'),
+                image: NetworkImage('http://p1.pstatp.com/origin/2a4100008d310b5fd8a8'),
                 fit: BoxFit.cover
               ),
               borderRadius: BorderRadius.all(
@@ -137,7 +135,7 @@ class RoundIconButton extends StatelessWidget {
         child: Icon(
           icon,
           color: iconColor,
-        ),
+        ), onPressed: () {},
       ),
     );
   }
