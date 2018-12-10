@@ -4,6 +4,7 @@ import 'package:flutter_module/page/clock.dart';
 import 'package:flutter_module/page/music.dart';
 import 'package:flutter_module/page/page.dart';
 import 'package:flutter_module/page/travel.dart';
+import 'package:flutter_module/page/dot.dart';
 
 void main() => runApp(MyApp());
 
@@ -35,6 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return  PageView(
       children: <Widget>[
+        DotAnima(),
         TravelView(),
         ClockView(),
         PageSelect(),
