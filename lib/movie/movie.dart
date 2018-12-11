@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_module/theme.dart';
-import 'package:path/path.dart';
 
 class MovieHome extends StatefulWidget {
   @override
@@ -13,9 +12,12 @@ class _MovieHomeState extends State<MovieHome> {
     return Scaffold(
       backgroundColor: moviesAccentColor,
       appBar: AppBar(
+          centerTitle: false,
           backgroundColor: Colors.transparent,
+          elevation: 0.0,
           title: Text(
             'Movies',
+            textAlign: TextAlign.left,
             style: TextStyle(
                 fontSize: 42, fontWeight: FontWeight.bold, color: Colors.white),
           )),
@@ -35,6 +37,7 @@ class _MovieHomeState extends State<MovieHome> {
                   borderRadius: BorderRadius.circular(16)),
               child: TextFormField(
                 decoration: InputDecoration(
+                    focusedBorder: InputBorder.none,
                     hintText: 'Search',
                     hintStyle: TextStyle(color: Colors.grey.withOpacity(0.3)),
                     prefixIcon: Icon(Icons.search,
@@ -80,7 +83,7 @@ class _MovieHomeState extends State<MovieHome> {
 
             // Popular
             Padding(
-              padding: const EdgeInsets.only(left:16.0),
+              padding: const EdgeInsets.only(left: 16.0),
               child: Text(
                 'Popular',
                 style: TextStyle(
@@ -114,7 +117,6 @@ class _MovieHomeState extends State<MovieHome> {
           height: 180,
           width: MediaQuery.of(context).size.width / 3,
           decoration: BoxDecoration(
-              color: Colors.red,
               borderRadius: BorderRadius.circular(4),
               image:
                   DecorationImage(image: NetworkImage(img), fit: BoxFit.cover)),
@@ -138,74 +140,78 @@ class _MovieHomeState extends State<MovieHome> {
       child: Stack(
         children: <Widget>[
           // content
-          Container(
-            height: 130,
-            margin: EdgeInsets.only(top: 30),
-            padding: EdgeInsets.only(left: 140),
-            decoration: BoxDecoration(
-              color: moviesLightDarkColor,
-              borderRadius: BorderRadius.circular(4),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(name, style: TextStyle(color: Colors.white)),
-                    IconButton(
-                      icon: Icon(
-                        Icons.favorite,
-                        color: Colors.red,
-                        size: 20,
-                      ),
-                      onPressed: () {},
-                    )
-                  ],
-                ),
-
-                // subTitle
-                Text(name,
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                        color: Colors.white.withOpacity(0.5), fontSize: 16)),
-
-                //分割线
-                Container(
-                  margin: EdgeInsets.only(top: 8),
-                  child: Row(
+          Card(
+            elevation: 5.0,
+            color: Colors.transparent,
+            child: Container(
+              height: 130,
+              margin: EdgeInsets.only(top: 30),
+              padding: EdgeInsets.only(left: 140),
+              decoration: BoxDecoration(
+                color: moviesLightDarkColor,
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Icon(Icons.star, color: const Color(0xFF039966)),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Icon(Icons.star, color: const Color(0xFF039966)),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Icon(Icons.star, color: const Color(0xFF039966)),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Icon(Icons.star, color: const Color(0xFF039966)),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Icon(Icons.star,
-                          color: moviesAccentColor.withOpacity(0.5)),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(point,
-                          style: TextStyle(
-                              color: Colors.orange,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold))
+                      Text(name, style: TextStyle(color: Colors.white)),
+                      IconButton(
+                        icon: Icon(
+                          Icons.favorite,
+                          color: Colors.red,
+                          size: 20,
+                        ),
+                        onPressed: () {},
+                      )
                     ],
                   ),
-                )
-              ],
+
+                  // subTitle
+                  Text(name,
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                          color: Colors.white.withOpacity(0.5), fontSize: 16)),
+
+                  //分割线
+                  Container(
+                    margin: EdgeInsets.only(top: 8),
+                    child: Row(
+                      children: <Widget>[
+                        Icon(Icons.star, color: const Color(0xFF039966)),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Icon(Icons.star, color: const Color(0xFF039966)),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Icon(Icons.star, color: const Color(0xFF039966)),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Icon(Icons.star, color: const Color(0xFF039966)),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Icon(Icons.star,
+                            color: moviesAccentColor.withOpacity(0.5)),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Text(point,
+                            style: TextStyle(
+                                color: Colors.orange,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold))
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
 
