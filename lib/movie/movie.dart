@@ -3,8 +3,6 @@ import 'package:flutter_module/movie/data/movies.dart';
 import 'package:flutter_module/movie/detail.dart';
 import 'package:flutter_module/theme.dart';
 import 'package:dio/dio.dart';
-import 'package:json_annotation/json_annotation.dart';
-import 'dart:convert';
 
 class MovieHome extends StatefulWidget {
   @override
@@ -13,13 +11,15 @@ class MovieHome extends StatefulWidget {
 
 class _MovieHomeState extends State<MovieHome> {
   List<Subjects> showingmovies;
-  List<Subjects> movies;
+  List<Subjects> movies = List();
 
-  @override
-  void initState() {
-    getMovies();
-  }
   
+  
+  @override
+    void initState() {
+      getMovies();
+      super.initState();
+    }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class _MovieHomeState extends State<MovieHome> {
         alignment: Alignment.centerLeft,
         width: double.infinity,
         child: ListView.builder(
-          itemCount: movies == null ? 0 : movies.length + 4,
+          itemCount: movies.length + 4,
           itemBuilder: (BuildContext context, int position) {
              switch (position) {
               case 0:
@@ -51,6 +51,9 @@ class _MovieHomeState extends State<MovieHome> {
                 break;
               case 2:
                 return buildShowingMovies();
+                break;
+              case 3:
+                return buildTitle('Popular', '');
                 break;
               default:
                 
@@ -154,6 +157,7 @@ class _MovieHomeState extends State<MovieHome> {
   // 流行
   Widget buildMovePopular(
       BuildContext context, String name, String point, String img) {
+        print(name);
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Stack(
@@ -249,7 +253,6 @@ class _MovieHomeState extends State<MovieHome> {
     Dio dio = Dio();
     Response response = await dio.get('http://api.douban.com/v2/movie/top250');
     // var result = json.decode(response.data.toString());
-    print(response.data["start"]);
     // Map userMap = json.decode(json);
 // var user = User.fromJson(userMap);
     Movies res = Movies.fromJson(response.data);
@@ -260,6 +263,11 @@ class _MovieHomeState extends State<MovieHome> {
 
     Movies res2 = Movies.fromJson(response2.data);
     showingmovies = res2.subjects;
-    print(showingmovies.length);
+    print(showingmovies.length.toString()  + "====" +  movies.length.toString());
+
+    setState(() {
+          movies = res.subjects ;
+          showingmovies = res2.subjects ;
+        });
   }
 }

@@ -4,8 +4,7 @@ import 'package:flutter_module/movie/data/movies.dart';
 import 'package:flutter_module/theme.dart';
 
 class DetailView extends StatefulWidget {
-
-  final Subjects subjects ;
+  final Subjects subjects;
   DetailView(this.subjects);
 
   @override
@@ -32,7 +31,7 @@ class _DetailViewState extends State<DetailView> {
                 buildContentView(),
 
                 // cast view
-                buildCastView()
+                buildCastView(widget.subjects.casts)
               ],
             ),
             Container(
@@ -119,7 +118,9 @@ class _DetailViewState extends State<DetailView> {
                                       color: Colors.white,
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold)),
-                              Text('Director:'+ widget.subjects.directors[0].name,
+                              Text(
+                                  'Director:' +
+                                      widget.subjects.directors[0].name,
                                   style: TextStyle(
                                     color: Colors.grey,
                                     fontSize: 14,
@@ -168,7 +169,7 @@ class _DetailViewState extends State<DetailView> {
                                     SizedBox(
                                       width: 20,
                                     ),
-                                    Text('9.0',
+                                    Text(widget.subjects.rating.average.toString(),
                                         style: TextStyle(
                                             color: Colors.orange,
                                             fontSize: 18,
@@ -189,7 +190,8 @@ class _DetailViewState extends State<DetailView> {
                               borderRadius: BorderRadius.circular(8),
                               image: DecorationImage(
                                   image: NetworkImage(
-                                      widget.subjects.images.large),fit: BoxFit.cover)),
+                                      widget.subjects.images.large),
+                                  fit: BoxFit.cover)),
                         ),
                       )
                     ],
@@ -313,7 +315,7 @@ class _DetailViewState extends State<DetailView> {
   }
 
   //castView
-  Widget buildCastView() {
+  Widget buildCastView(List<Casts> casts) {
     return Container(
       padding: EdgeInsets.all(16.0),
       child: Column(
@@ -329,89 +331,41 @@ class _DetailViewState extends State<DetailView> {
           Container(
             margin: EdgeInsets.only(top: 16.0),
             height: 180,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.only(right: 16.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        width: MediaQuery.of(context).size.width / 4,
-                        height: 140,
-                        decoration: BoxDecoration(
-                            color: Colors.red,
-                            borderRadius: BorderRadius.circular(4),
-                            image: DecorationImage(
-                                image: NetworkImage(
-                                    'http://img3.doubanio.com/view/celebrity/s_ratio_celebrity/public/p44986.webp'),
-                                fit: BoxFit.cover)),
-                      ),
-                      SizedBox(height: 16.0),
-                      Text(
-                        '柊瑠美',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.white, fontSize: 16.0),
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(right: 16.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        width: MediaQuery.of(context).size.width / 4,
-                        height: 140,
-                        decoration: BoxDecoration(
-                            color: Colors.red,
-                            borderRadius: BorderRadius.circular(4),
-                            image: DecorationImage(
-                                image: NetworkImage(
-                                    'http://img1.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1376151005.51.webp'),
-                                fit: BoxFit.cover)),
-                      ),
-                      SizedBox(height: 16.0),
-                      Text(
-                        '入野自由',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.white, fontSize: 16.0),
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(right: 16.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        width: MediaQuery.of(context).size.width / 4,
-                        height: 140,
-                        decoration: BoxDecoration(
-                            color: Colors.red,
-                            borderRadius: BorderRadius.circular(4),
-                            image: DecorationImage(
-                                image: NetworkImage(
-                                    'http://img1.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1463193210.13.webp'),
-                                fit: BoxFit.cover)),
-                      ),
-                      SizedBox(height: 16.0),
-                      Text(
-                        '夏木真理',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.white, fontSize: 16.0),
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            ),
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: casts.length,
+                itemBuilder: (BuildContext context, int position) {
+                  return buildItem(casts[position]);
+                }),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget buildItem(Casts casts) {
+    return Container(
+      margin: EdgeInsets.only(right: 16.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Container(
+            width: MediaQuery.of(context).size.width / 4,
+            height: 140,
+            decoration: BoxDecoration(
+                color: Colors.red,
+                borderRadius: BorderRadius.circular(4),
+                image: DecorationImage(
+                    image: NetworkImage(
+                        casts.avatars.large),
+                    fit: BoxFit.cover)),
+          ),
+          SizedBox(height: 16.0),
+          Text(
+            casts.name,
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.white, fontSize: 16.0),
           )
         ],
       ),
