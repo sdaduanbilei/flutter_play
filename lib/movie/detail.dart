@@ -55,7 +55,7 @@ class _DetailViewState extends State<DetailView> {
     return Container(
         height: 400,
         child: Padding(
-            padding: const EdgeInsets.only(top: 24.0),
+            padding: const EdgeInsets.only(bottom: 24.0),
             child: Stack(
               children: <Widget>[
                 // 返回箭头
