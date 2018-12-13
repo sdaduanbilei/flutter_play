@@ -13,13 +13,11 @@ class _MovieHomeState extends State<MovieHome> {
   List<Subjects> showingmovies;
   List<Subjects> movies = List();
 
-  
-  
   @override
-    void initState() {
-      getMovies();
-      super.initState();
-    }
+  void initState() {
+    getMovies();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +40,7 @@ class _MovieHomeState extends State<MovieHome> {
         child: ListView.builder(
           itemCount: movies.length + 4,
           itemBuilder: (BuildContext context, int position) {
-             switch (position) {
+            switch (position) {
               case 0:
                 return buildSearchView();
                 break;
@@ -56,12 +54,11 @@ class _MovieHomeState extends State<MovieHome> {
                 return buildTitle('Popular', '');
                 break;
               default:
-                
-                if (movies!= null && position < movies.length ) {
+                if (movies != null && position < movies.length) {
                   var item = movies[position];
-                  return  buildMovePopular(context, item.title, item.rating.average.toString(), item.images.large);
+                  return buildMovePopular(context, item);
                 }
-                break ;
+                break;
             }
           },
         ),
@@ -138,7 +135,8 @@ class _MovieHomeState extends State<MovieHome> {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(4),
                     image: DecorationImage(
-                        image: NetworkImage(subjects.images.large), fit: BoxFit.cover)),
+                        image: NetworkImage(subjects.images.large),
+                        fit: BoxFit.cover)),
               ),
               SizedBox(
                 height: 10,
@@ -155,96 +153,112 @@ class _MovieHomeState extends State<MovieHome> {
   }
 
   // 流行
-  Widget buildMovePopular(
-      BuildContext context, String name, String point, String img) {
-        print(name);
+  Widget buildMovePopular(BuildContext context, Subjects subjects) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: Stack(
-        children: <Widget>[
-          // content
-          Container(
-            height: 130,
-            margin: EdgeInsets.only(top: 30),
-            padding: EdgeInsets.only(left: 140),
-            decoration: BoxDecoration(
-              color: moviesLightDarkColor,
-              borderRadius: BorderRadius.circular(4),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+      child: Hero(
+        tag: subjects.images.large,
+        child: Material(
+          shadowColor: moviesAccentColor,
+          color: moviesAccentColor,
+          child: InkWell(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => DetailView(subjects)));
+            },
+            child: Stack(
               children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(name, style: TextStyle(color: Colors.white)),
-                    IconButton(
-                      icon: Icon(
-                        Icons.favorite,
-                        color: Colors.red,
-                        size: 20,
-                      ),
-                      onPressed: () {},
-                    )
-                  ],
-                ),
-
-                // subTitle
-                Text(name,
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                        color: Colors.white.withOpacity(0.5), fontSize: 16)),
-
-                //分割线
+                // content
                 Container(
-                  margin: EdgeInsets.only(top: 8),
-                  child: Row(
+                  height: 130,
+                  margin: EdgeInsets.only(top: 30),
+                  padding: EdgeInsets.only(left: 140),
+                  decoration: BoxDecoration(
+                    color: moviesLightDarkColor,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Icon(Icons.star, color: const Color(0xFF039966)),
-                      SizedBox(
-                        width: 5,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(subjects.title,
+                              style: TextStyle(color: Colors.white)),
+                          IconButton(
+                            icon: Icon(
+                              Icons.favorite,
+                              color: Colors.red,
+                              size: 20,
+                            ),
+                            onPressed: () {},
+                          )
+                        ],
                       ),
-                      Icon(Icons.star, color: const Color(0xFF039966)),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Icon(Icons.star, color: const Color(0xFF039966)),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Icon(Icons.star, color: const Color(0xFF039966)),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Icon(Icons.star,
-                          color: moviesAccentColor.withOpacity(0.5)),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(point,
+
+                      // subTitle
+                      Text(subjects.title,
+                          textAlign: TextAlign.left,
                           style: TextStyle(
-                              color: Colors.orange,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold))
+                              color: Colors.white.withOpacity(0.5),
+                              fontSize: 16)),
+
+                      //分割线
+                      Container(
+                        margin: EdgeInsets.only(top: 8),
+                        child: Row(
+                          children: <Widget>[
+                            Icon(Icons.star, color: const Color(0xFF039966)),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Icon(Icons.star, color: const Color(0xFF039966)),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Icon(Icons.star, color: const Color(0xFF039966)),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Icon(Icons.star, color: const Color(0xFF039966)),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Icon(Icons.star,
+                                color: moviesAccentColor.withOpacity(0.5)),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Text(subjects.rating.average.toString(),
+                                style: TextStyle(
+                                    color: Colors.orange,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold))
+                          ],
+                        ),
+                      )
                     ],
                   ),
+                ),
+
+                // img
+                Container(
+                  width: 100,
+                  height: 140,
+                  margin: EdgeInsets.only(left: 16),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4),
+                      image: DecorationImage(
+                          image: NetworkImage(subjects.images.large),
+                          fit: BoxFit.cover)),
                 )
               ],
             ),
           ),
-
-          // img
-          Container(
-            width: 100,
-            height: 140,
-            margin: EdgeInsets.only(left: 16),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4),
-                image: DecorationImage(
-                    image: NetworkImage(img), fit: BoxFit.cover)),
-          )
-        ],
+        ),
       ),
     );
   }
@@ -263,11 +277,11 @@ class _MovieHomeState extends State<MovieHome> {
 
     Movies res2 = Movies.fromJson(response2.data);
     showingmovies = res2.subjects;
-    print(showingmovies.length.toString()  + "====" +  movies.length.toString());
+    print(showingmovies.length.toString() + "====" + movies.length.toString());
 
     setState(() {
-          movies = res.subjects ;
-          showingmovies = res2.subjects ;
-        });
+      movies = res.subjects;
+      showingmovies = res2.subjects;
+    });
   }
 }
