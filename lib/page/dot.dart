@@ -14,13 +14,13 @@ class _DotAnimaState extends State<DotAnima>
   Animation<double> animation_radius_in;
   Animation<double> animation_radius_out;
 
-  double radius = 10.0;
-  final double initialRadius = 30.0;
+  double radius = 5.0;
+  final double initialRadius = 20.0;
   @override
   void initState() {
     super.initState();
     controller =
-        AnimationController(vsync: this, duration: Duration(seconds: 4));
+        AnimationController(vsync: this, duration: Duration(seconds: 2));
 
     animation_rotation = Tween<double>(
       begin: 0.0,
@@ -62,22 +62,16 @@ class _DotAnimaState extends State<DotAnima>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        leading: IconButton(
-          icon: Icon(Icons.menu),
-          color: Colors.black54,
-          onPressed: () {},
-        ),
-      ),
+      backgroundColor: Colors.transparent,
       body: Container(
+        
         child: Center(
           child: RotationTransition(
             turns: animation_rotation,
             child: Stack(
               children: <Widget>[
                 Dot(
-                  radius: 30,
+                  radius: radius,
                   color: Colors.black12,
                 ),
                 Transform.translate(

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_module/movie/data/movies.dart';
 import 'package:flutter_module/movie/detail.dart';
+import 'package:flutter_module/movie/loadlayout.dart';
 import 'package:flutter_module/theme.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class MovieHome extends StatefulWidget {
   @override
@@ -37,8 +39,15 @@ class _MovieHomeState extends State<MovieHome> {
         color: moviesAccentColor,
         alignment: Alignment.centerLeft,
         width: double.infinity,
-        child: ListView.builder(
-          itemCount: movies.length + 4,
+        child: getDisplay(),
+      ),
+    );
+  }
+
+  Widget getDisplay(){
+    if(movies.length > 1){
+      return ListView.builder(
+        itemCount: movies.length + 4,
           itemBuilder: (BuildContext context, int position) {
             switch (position) {
               case 0:
@@ -60,10 +69,10 @@ class _MovieHomeState extends State<MovieHome> {
                 }
                 break;
             }
-          },
-        ),
-      ),
-    );
+          });
+    } else{
+      return LoadingLayout();
+    }
   }
 
   Widget buildShowingMovies() {
