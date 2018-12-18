@@ -4,7 +4,6 @@ import 'package:flutter_module/movie/detail.dart';
 import 'package:flutter_module/movie/loadlayout.dart';
 import 'package:flutter_module/theme.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class MovieHome extends StatefulWidget {
   @override
@@ -54,13 +53,13 @@ class _MovieHomeState extends State<MovieHome> {
                 return buildSearchView();
                 break;
               case 1:
-                return buildTitle('Now Showing', 'see all');
+                return buildTitle('正在热映', '查看全部');
                 break;
               case 2:
                 return buildShowingMovies();
                 break;
               case 3:
-                return buildTitle('Popular', '');
+                return buildTitle('流行排行', '');
                 break;
               default:
                 if (movies != null && position < movies.length) {

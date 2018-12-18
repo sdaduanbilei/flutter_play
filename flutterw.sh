@@ -7,6 +7,7 @@ projectDir=`pwd`
 rootFlutter=`which flutter`
 # 提取 flutter skd路径
 rootDir=${rootFlutter%/*}
+# 获取
 
 # step1 clean
 echo 'clean old build'
@@ -27,11 +28,37 @@ for arch in android-arm android-arm-profile android-arm-release ; do
     popd
 done
 
-# step3 build
+# step3 package get
+echo 'packages get'
+cd ${projectDir} # 回到项目
+${rootFlutter} packages get
+
+# step4 build
 echo 'build apk'
-cd ${projectDir} # 回到项目路径,并且编译产物
 ${rootFlutter} build apk
 
 # step4 unzip apk
 echo 'unzip apk'
-unzip ${projectDir}/build/host/outputs/apk/release/app-release.apk ${projectDir}/build/host/intermediates
+cd ${projectDir}/build/host
+mkdir apkfile
+unzip ${projectDir}/build/host/outputs/apk/release/app-release.apk -d ${projectDir}/build/host/apkfile/
+
+# step4 copy assets / lib
+echo 'copy assets / lib'
+mv ${projectDir}/build/host/apkfile/assets/ ${projectDir}/.android/Flutter/src/main/
+mv ${projectDir}/build/host/apkfile/lib/ ${projectDir}/.android/Flutter/src/main/
+
+# step5 build aar
+echo 'build aar'
+cd ${projectDir}/.android
+./gradlew clean flutter:assembleRelease artifactoryPublish --info
+
+# step6 remove assets/lib
+echo 'remove assets/lib'
+cd ${projectDir}/.android/Flutter/src/main/
+rm -rf assets
+rm -rf lib
+
+echo 'succccccccccccccccccccccccccccccccccc'
+exit
+
