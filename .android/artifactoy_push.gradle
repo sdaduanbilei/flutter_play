@@ -10,10 +10,9 @@ publishing {
     publications {
         aar(MavenPublication) {
             groupId = "${artifactory_groupid}"
-            artifactId project.name
+            artifactId "${artifactory_name}"
             version = artifactVersion
-            artifact "${project.buildDir}/outputs/aar/${project.name}-${artifactory_model}.aar"
-
+            artifact "${project.buildDir}/outputs/aar/${artifactory_name}.aar"
             pom.withXml {
                 //Creating additional node for dependencies
                 def dependenciesNode = asNode().appendNode('dependencies')

@@ -37,13 +37,15 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
-    project.android.libraryVariants.all { variant ->
-        def targetAssets = "${project.buildDir}/intermediates/flutter/${variant.name}"
-        def customSourceSet = variant.getSourceSets()[0]
-        print( customSourceSet)
-        if (customSourceSet instanceof com.android.build.gradle.internal.api.DefaultAndroidSourceSet) {
-            customSourceSet = customSourceSet.asType(com.android.build.gradle.internal.api.DefaultAndroidSourceSet)
-            customSourceSet.getAssets().srcDirs(targetAssets)
+    libraryVariants.all { variant ->
+        variant.outputs.all {
+            if (outputFileName.endsWith('.aar')) {
+                if ("debug".equalsIgnoreCase(variant.buildType.name)) {
+                    outputFileName = "app_debug.aar"
+                } else if("release".equalsIgnoreCase(variant.buildType.name)){
+                    outputFileName = "${artifactory_name}.aar"
+                }
+            }
         }
     }
 }

@@ -7,7 +7,7 @@ projectDir=`pwd`
 rootFlutter=`which flutter`
 # 提取 flutter skd路径
 rootDir=${rootFlutter%/*}
-# 获取
+
 
 # step1 clean
 echo 'clean old build'
@@ -49,7 +49,7 @@ mv ${projectDir}/build/host/apkfile/assets/ ${projectDir}/.android/Flutter/src/m
 mv ${projectDir}/build/host/apkfile/lib/ ${projectDir}/.android/Flutter/src/main/
 
 # step5 build aar
-echo 'build aar'
+echo 'publish aar'
 cd ${projectDir}/.android
 ./gradlew clean flutter:assembleRelease artifactoryPublish --info
 
